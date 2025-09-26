@@ -32,9 +32,7 @@ const AddUser = () => {
   const roles = [
     "Admin",
     "Teacher",
-    "Student",
-    "Subject Expert",
-    "Guide"
+    "Student"
   ];
 
   const handleInputChange = (name, value) => {

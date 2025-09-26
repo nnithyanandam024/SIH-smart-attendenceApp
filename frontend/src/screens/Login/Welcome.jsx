@@ -7,12 +7,14 @@ const Welcome = ({navigation}) => {
   return (
       <ScrollView contentContainerStyle={styles.container}>
         <View>
-          <Text style={styles.title}>PROJECT S7</Text>
+          <Text style={styles.title}>SMART CURRICULUM</Text>
+
+          <Text style={styles.mainText}>-Team DevNest</Text>
           {/* <Image source={WelcomeImg} style={styles.image} /> */}
           <WelcomeImg height={267} width={290} style={styles.logimg} />
           <Text style={styles.mainText}>Hello !</Text>
           <Text style={styles.text2}>
-            "Welcome back! Please log {"\n"}in to continue"
+            "Welcome back! Please log {"\n"}in to continue" 
           </Text>
           <TouchableOpacity 
             style={styles.pressablebtn} 

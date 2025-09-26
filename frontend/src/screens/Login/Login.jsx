@@ -29,7 +29,8 @@ const Login = ({ navigation }) => {
         teacher: { email: 'teacher@gmail.com', password: 'teacher123' },
         admin: { email: 'admin@gmail.com', password: 'Admin123' },
         student: { email: 'student@gmail.com', password: 'student123' },
-        guide: { email: 'guide@gmail.com', password: 'guide123' },
+        guide: { email: 'staff@gmail.com', password: 'staff123' },
+        parent: { email: 'parent@gmail.com', password: 'parent123' }, 
     };
 
     const handleLogin = () => {
@@ -43,12 +44,15 @@ const Login = ({ navigation }) => {
         if (email === userCredentials.teacher.email && password === userCredentials.teacher.password) {
             navigation.navigate('TeacherDashboard');
         } else if (email === userCredentials.admin.email && password === userCredentials.admin.password) {
-            navigation.navigate('AdminDashboard');
-        } else if (email === userCredentials.student.email && password === userCredentials.student.password) {
+            navigation.navigate('AdminDashboard'); }
+        else if (email === userCredentials.student.email && password === userCredentials.student.password) {
             navigation.navigate('StudentDashboard');
-        }
+         }
         else if (email === userCredentials.guide.email && password === userCredentials.guide.password) {
             navigation.navigate('GuideDashboard');
+        }
+        else if (email === userCredentials.parent.email && password === userCredentials.parent.password) {
+            navigation.navigate('ParentDashboard');
         }
          else {
             Alert.alert('Error', 'Invalid credentials');

@@ -5,115 +5,118 @@ import {
   SafeAreaView, 
   ScrollView, 
   TouchableOpacity,
-  FlatList,
-  ActivityIndicator
+  ActivityIndicator,
+  Dimensions
 } from 'react-native';
-import Logout from '../../../assets/Teacher/log-out.svg';
+import { BarChart } from 'react-native-chart-kit';
+import Logout from '../../../assets/Admin/log-out.svg';
 import styles from './AdminHomeStyle';
 
-const StatBox = ({ title, value, bgColor }) => {
+const { width: screenWidth } = Dimensions.get('window');
+
+const StatBox = ({ title, value, bgColor, isLarge = false }) => {
   return (
-    <View style={[styles.statBox, { backgroundColor: bgColor }]}>
+    <View style={[
+      isLarge ? styles.largeStatBox : styles.statBox, 
+      { backgroundColor: bgColor }
+    ]}>
       <Text style={styles.statTitle}>{title}</Text>
-      <Text style={styles.statValue}>{value}</Text>
+      <Text style={[styles.statValue, isLarge && styles.largeStatValue]}>{value}</Text>
     </View>
   );
 };
 
-const DeadlineItem = ({ item }) => {
+const ChartSection = ({ title, data }) => {
+  const chartConfig = {
+    backgroundGradientFrom: '#ffffff',
+    backgroundGradientTo: '#ffffff',
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientToOpacity: 0,
+    color: (opacity = 1) => `rgba(66, 165, 245, ${opacity})`,
+    strokeWidth: 2,
+    barPercentage: 0.7,
+    useShadowColorFromDataset: false,
+    decimalPlaces: 1,
+    propsForLabels: {
+      fontSize: 10,
+      fontWeight: '500',
+    },
+    propsForVerticalLabels: {
+      fontSize: 8,
+    },
+    propsForHorizontalLabels: {
+      fontSize: 8,
+    }
+  };
+
   return (
-    <View style={styles.deadlineItem}>
-      <Text style={styles.deadlineTitle}>{item.title}</Text>
-      <View style={styles.deadlineDetails}>
-        <Text style={styles.deadlineDate}>{item.date}</Text>
-      </View>
+    <View style={styles.chartSection}>
+      <Text style={styles.chartTitle}>{title}</Text>
+      <BarChart
+        data={data}
+        width={screenWidth - 64}
+        height={150}
+        chartConfig={chartConfig}
+        verticalLabelRotation={0}
+        showBarTops={false}
+        withInnerLines={true}
+        style={styles.chart}
+        yAxisSuffix=""
+        fromZero={true}
+      />
     </View>
   );
 };
 
-const UpdateItem = ({ item }) => {
-  return (
-    <View style={styles.updateItem}>
-      <Text style={styles.updateTitle}>{item.title}</Text>
-      <Text style={styles.updateDescription}>{item.description}</Text>
-      <Text style={styles.updateTimestamp}>{item.timestamp}</Text>
-    </View>
-  );
-};
-
-const TeacherHome = ({ navigation }) => {
+const AdminHome = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
-    totalProjects: 0,
-    completedProjects: 0,
-    ongoingProjects: 0,
-    projectsTaken: 0
+    studentAttendance: '93%',
+    totalStudents: '860',
+    lowAttendance: '17',
+    onDuty: '8'
   });
-  const [deadlines, setDeadlines] = useState([]);
-  const [updates, setUpdates] = useState([]);
+
+  const [attendanceData, setAttendanceData] = useState({
+    labels: ['CSE', 'IT', 'MECH', 'CIVIL', 'AIDS', 'EEE'],
+    datasets: [{
+      data: [1.8, 1.9, 1.7, 1.8, 1.4, 1.9],
+      colors: [
+        () => '#42A5F5', // CSE - Blue
+        () => '#66BB6A', // IT - Green  
+        () => '#42A5F5', // MECH - Blue
+        () => '#42A5F5', // CIVIL - Blue
+        () => '#EF5350', // AIDS - Red
+        () => '#66BB6A', // EEE - Green
+      ]
+    }]
+  });
+
+  const [departmentData, setDepartmentData] = useState({
+    labels: ['CSE', 'IT', 'MECH', 'CIVIL', 'AIDS', 'EEE'],
+    datasets: [{
+      data: [1.7, 1.8, 1.6, 1.7, 1.3, 1.8],
+      colors: [
+        () => '#42A5F5', // CSE - Blue
+        () => '#66BB6A', // IT - Green
+        () => '#42A5F5', // MECH - Blue
+        () => '#42A5F5', // CIVIL - Blue
+        () => '#EF5350', // AIDS - Red
+        () => '#66BB6A', // EEE - Green
+      ]
+    }]
+  });
 
   useEffect(() => {
-    // Mock API call - replace with actual API calls
     fetchTeacherData();
   }, []);
 
   const fetchTeacherData = async () => {
     try {
-      // Simulating API calls
-      // In a real app, these would be actual fetch or axios calls
-      
-      // Mock stats data
-      const statsData = {
-        totalProjects: 12,
-        completedProjects: 5,
-        ongoingProjects: 7,
-        projectsTaken: 15
-      };
-      
-      // Mock deadlines data
-      const deadlinesData = [
-        { id: '1', title: 'Submit Final Project Evaluation', date: 'May 20, 2025' },
-        { id: '2', title: 'Review Student Proposals', date: 'May 25, 2025' },
-        { id: '3', title: 'Complete Mid-term Assessment', date: 'June 2, 2025' },
-        { id: '4', title: 'Faculty Meeting Notes', date: 'June 5, 2025' },
-        { id: '5', title: 'Project Progress Reports', date: 'June 10, 2025' },
-      ];
-      
-      // Mock updates data
-      const updatesData = [
-        { 
-          id: '1', 
-          title: 'New Project Guidelines', 
-          description: 'Updated project guidelines have been published. Please review before next session.',
-          timestamp: 'Today, 10:45 AM' 
-        },
-        { 
-          id: '2', 
-          title: 'Student Feedback System', 
-          description: 'A new feedback system is now available for all ongoing projects.',
-          timestamp: 'Yesterday, 2:30 PM' 
-        },
-        { 
-          id: '3', 
-          title: 'Department Meeting', 
-          description: 'Upcoming department meeting scheduled for next Monday at 3 PM.',
-          timestamp: 'May 14, 2025, 9:15 AM' 
-        },
-        { 
-          id: '4', 
-          title: 'Curriculum Update', 
-          description: 'The curriculum for next semester has been finalized and is available for review.',
-          timestamp: 'May 12, 2025, 4:20 PM' 
-        },
-      ];
-      
-      // Update state with mock data
-      setStats(statsData);
-      setDeadlines(deadlinesData);
-      setUpdates(updatesData);
-      
-      // Set loading to false
-      setLoading(false);
+      // Simulating API call delay
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
       
     } catch (error) {
       console.error('Error fetching teacher data:', error);
@@ -141,63 +144,48 @@ const TeacherHome = ({ navigation }) => {
       
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.statsContainer}>
-          <View style={styles.statsRow}>
+          <View style={styles.topStatsRow}>
             <StatBox 
-              title="Total Projects" 
-              value={stats.totalProjects.toString()} 
-              bgColor="#FFD6FF" 
+              title="Student Attendance" 
+              value={stats.studentAttendance} 
+              bgColor="#E1BEE7" 
+              isLarge={true}
             />
             <StatBox 
-              title="Completed Projects" 
-              value={stats.completedProjects.toString()} 
-              bgColor="#E7C6FF" 
+              title="Total Students" 
+              value={stats.totalStudents} 
+              bgColor="#CE93D8" 
+              isLarge={true}
             />
           </View>
           
-          <View style={styles.statsRow}>
+          <View style={styles.bottomStatsRow}>
             <StatBox 
-              title="Ongoing Projects" 
-              value={stats.ongoingProjects.toString()} 
-              bgColor="#C8B6FF" 
+              title="Low Attendance" 
+              value={stats.lowAttendance} 
+              bgColor="#BA68C8" 
             />  
             <StatBox 
-              title="Projects Taken" 
-              value={stats.projectsTaken.toString()} 
-              bgColor="#B8C0FF" 
+              title="On - Duty" 
+              value={stats.onDuty} 
+              bgColor="#AB47BC" 
             />
           </View>
         </View>
-        
-        <View style={styles.deadlinesSection}>
-          <Text style={styles.sectionTitle}>Upcoming Deadlines</Text>
-          <FlatList
-            data={deadlines}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <DeadlineItem item={item} />}
-            style={styles.deadlinesList}
-            scrollEnabled={false} // Disable scroll inside FlatList since it's nested in ScrollView
-            ListEmptyComponent={
-              <Text style={styles.emptyListText}>No upcoming deadlines</Text>
-            }
-          />
-        </View>
 
-        <View style={styles.updatesSection}>
-          <Text style={styles.sectionTitle}>Recent Updates</Text>
-          <FlatList
-            data={updates}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <UpdateItem item={item} />}
-            style={styles.updatesList}
-            scrollEnabled={false} // Disable scroll inside FlatList since it's nested in ScrollView
-            ListEmptyComponent={
-              <Text style={styles.emptyListText}>No recent updates</Text>
-            }
-          />
-        </View>
+        <ChartSection 
+          title="Attendance Performance" 
+          data={attendanceData}
+        />
+
+        <ChartSection 
+          title="Department Performance" 
+          data={departmentData}
+        />
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-export default TeacherHome;
+export default AdminHome;
+

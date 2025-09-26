@@ -1,4 +1,4 @@
-// Simplified AppLayout.jsx without using AuthContext
+// Updated AppLayout.jsx with Parent navigation enabled
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -8,18 +8,15 @@ import { MenuProvider } from 'react-native-popup-menu';
 import Welcome from '../screens/Login/Welcome';
 import Login from '../screens/Login/Login';
 
-import TeacherTabNavigator from './TeacherTabNavigator';
-import ProjectDetails from '../screens/Teacher/Project/ProjectDetails';
-import DepartmentProgress from '../screens/Teacher/Progress/DepartmentProgress';
-import DepProjectDetails from '../screens/Teacher/Progress/DepProjectDetails';
+// import TeacherTabNavigator from './TeacherTabNavigator';
+// import ProjectDetails from '../screens/Teacher/Project/ProjectDetails';
+// import DepartmentProgress from '../screens/Teacher/Progress/DepartmentProgress';
+// import DepProjectDetails from '../screens/Teacher/Progress/DepProjectDetails';
 
 import AdminTabNavigator from './AdminTabNavigator';
-
 import GuideTabNavigator from './GuideTabNavigator';
-import Invitations from '../screens/Guide/GuideHome/Invitations';
-import GuideProject from '../screens/Guide/Project/GuideProject';
-import GuideProjectProgress from '../screens/Guide/Project/GuideProjectProgress';
-// import StudentTabNavigator from './StudentTabNavigator'; // Make sure to create this
+import StudentTabNavigator from './StudentTabNavigator';
+import ParentTabNavigator from './ParentTabNavigator'; // Added Parent navigation
 
 const Stack = createStackNavigator();
 
@@ -41,7 +38,7 @@ const AppLayout = () => {
               options={{ headerShown: false }}
             />
 
-            {/* Teacher Screens */}
+            {/* Teacher Screens - Currently commented out
             <Stack.Screen
               name="TeacherDashboard"
               component={TeacherTabNavigator}
@@ -61,7 +58,7 @@ const AppLayout = () => {
               name="DepProjectDetails"
               component={DepProjectDetails}
               options={{ headerShown: false }}
-            />
+            /> */}
 
             {/* Admin Screens */}
             <Stack.Screen
@@ -70,12 +67,19 @@ const AppLayout = () => {
               options={{ headerShown: false }}
             />
             
-           
-            {/* <Stack.Screen
+            {/* Student Screens */}
+            <Stack.Screen
               name="StudentDashboard"
               component={StudentTabNavigator}
               options={{ headerShown: false }}
-            /> */}
+            />
+
+            {/* Parent Screens - Now enabled */}
+            <Stack.Screen
+              name="ParentDashboard"
+              component={ParentTabNavigator}
+              options={{ headerShown: false }}
+            />
 
             {/* Guide Screens */}
             <Stack.Screen
@@ -83,7 +87,7 @@ const AppLayout = () => {
               component={GuideTabNavigator}
               options={{ headerShown: false }}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
               name="Invitations"
               component={Invitations}
               options={{ headerShown: false }}
@@ -97,7 +101,7 @@ const AppLayout = () => {
               name="GuideProjectProgress"
               component={GuideProjectProgress}
               options={{ headerShown: false }}
-            />
+            /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </MenuProvider>

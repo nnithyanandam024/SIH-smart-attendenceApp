@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Text, StyleSheet, Keyboard, Platform } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {View, Text, StyleSheet, Keyboard, Platform} from 'react-native';
 
 import AdminHome from '../screens/Admin/AdminHome/AdminHome';
 import AdminAddUser from '../screens/Admin/AddUser/AddUser';
-import AdminProjects from '../screens/Admin/Project/ProjectHome';
-import AdminProgress from '../screens/Admin/Progress/ProgressHome';
+import ScheduleStackNavigator from './ScheduleStackNavigator'; // Import the new stack navigator
+import AdminProgress from '../screens/Admin/Progress/AdminProgress';
+import AdminCalendar from '../screens/Admin/Calendar/CalendarHome';
 
 import Home from '../assets/Navbar/house.svg';
 import AddUser from '../assets/Navbar/user-plus.svg';
-import Project from '../assets/Navbar/file-text.svg';
-import Progress from '../assets/Navbar/graph.svg';
+import Schedule from '../assets/Navbar/calendar.svg';
+import Progress from '../assets/Navbar/bar-chart.svg';
+import Calendar from '../assets/Navbar/calendar-days.svg';
 
 import HomeClicked from '../assets/Navbar/houseClicked.svg';
 import AddUserClicked from '../assets/Navbar/user-plusClicked.svg';
-import ProjectClicked from '../assets/Navbar/file-textClicked.svg';
-import ProgressClicked from '../assets/Navbar/graphClicked.svg';
+import ScheduleClicked from '../assets/Navbar/calendarClicked.svg';
+import ProgressClicked from '../assets/Navbar/bar-chartClicked.svg';
+import CalendarClicked from '../assets/Navbar/calendar-daysClicked.svg';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,13 +31,13 @@ const AdminTabNavigator = () => {
       Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
       () => {
         setKeyboardVisible(true);
-      }
+      },
     );
     const keyboardDidHideListener = Keyboard.addListener(
       Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
       () => {
         setKeyboardVisible(false);
-      }
+      },
     );
 
     // Clean up listeners when component unmounts
@@ -56,16 +59,15 @@ const AdminTabNavigator = () => {
         tabBarActiveTintColor: '#c884fc',
         tabBarInactiveTintColor: '#CDCDCD',
         tabBarLabelStyle: styles.tabLabel,
-      }}
-    >
+      }}>
       <Tab.Screen
         name="AdminHome"
         component={AdminHome}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({ focused }) => {
+          tabBarIcon: ({focused}) => {
             const Icon = focused ? HomeClicked : Home;
-            return <Icon width={24} height={24} />;
+            return <Icon width={20} height={20} />;
           },
         }}
       />
@@ -74,20 +76,20 @@ const AdminTabNavigator = () => {
         component={AdminAddUser}
         options={{
           tabBarLabel: 'Add User',
-          tabBarIcon: ({ focused }) => {
+          tabBarIcon: ({focused}) => {
             const Icon = focused ? AddUserClicked : AddUser;
-            return <Icon width={24} height={24} />;
+            return <Icon width={20} height={20} />;
           },
         }}
       />
       <Tab.Screen
-        name="AdminProjects"
-        component={AdminProjects}
+        name="AdminSchedule"
+        component={ScheduleStackNavigator} // Use the stack navigator instead of direct component
         options={{
-          tabBarLabel: 'Projects',
-          tabBarIcon: ({ focused }) => {
-            const Icon = focused ? ProjectClicked : Project;
-            return <Icon width={24} height={24} />;
+          tabBarLabel: 'Schedule',
+          tabBarIcon: ({focused}) => {
+            const Icon = focused ? ScheduleClicked : Schedule;
+            return <Icon width={20} height={20} />;
           },
         }}
       />
@@ -96,9 +98,20 @@ const AdminTabNavigator = () => {
         component={AdminProgress}
         options={{
           tabBarLabel: 'Progress',
-          tabBarIcon: ({ focused }) => {
+          tabBarIcon: ({focused}) => {
             const Icon = focused ? ProgressClicked : Progress;
-            return <Icon width={24} height={24} />;
+            return <Icon width={20} height={20} />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="AdminCalendar"
+        component={AdminCalendar}
+        options={{
+          tabBarLabel: 'Calendar',
+          tabBarIcon: ({focused}) => {
+            const Icon = focused ? CalendarClicked : Calendar;
+            return <Icon width={20} height={20} />;
           },
         }}
       />
@@ -112,13 +125,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderTopWidth: 1,
     borderTopColor: '#F0F0F0',
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
+    paddingVertical: 8,
   },
   tabLabel: {
-    fontSize: 12,
-    marginTop: 0,
+    fontSize: 10,
+    marginTop: 2,
     marginBottom: 5,
-  }
+    fontWeight: '500',
+  },
 });
 
 export default AdminTabNavigator;

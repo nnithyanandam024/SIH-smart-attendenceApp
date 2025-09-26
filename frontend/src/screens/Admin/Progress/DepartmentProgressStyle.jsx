@@ -1,93 +1,79 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window'); // ✅ get device width
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f0ff',
+    backgroundColor: '#F9FAFB',
+  },
+  content: {
+    padding: 20,
   },
   header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#1E3A8A',
+    textAlign: 'center',
+  },
+  yearTabsContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    justifyContent: 'space-around',
+    marginBottom: 20,
   },
-  headerText: {
-    fontSize: 23,
+  yearTab: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    backgroundColor: '#E5E7EB',
+  },
+  selectedYearTab: {
+    backgroundColor: '#1E3A8A',
+  },
+  yearTabText: {
+    color: '#374151',
+    fontWeight: '500',
+  },
+  selectedYearTabText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+  },
+  sectionTitle: {
+    fontSize: 18,
     fontWeight: '600',
-    color: '#000',
-    marginLeft: 1,
-  },
-  backButton: {
-    padding: 0,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingText: {
-    fontSize: 16,
-    color: '#666',
-  },
-  projectsList: {
-    padding: 15,
-  },
-  projectCard: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 15,
     marginBottom: 15,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
+    color: '#111827',
   },
-  projectHeader: {
+  departmentGrid: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
   },
-  projectName: {
+  departmentCard: {
+    width: (width - 60) / 2, // ✅ now works
+    backgroundColor: '#FFFFFF',
+    borderRadius: 15,
+    padding: 20,
+    marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+  },
+  departmentCircle: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginBottom: 10,
+  },
+  departmentName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#000',
-    flex: 1,
-  },
-  studentCount: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#4CAF50',
-  },
-  descriptionTitle: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#666',
-    marginTop: 5,
-  },
-  description: {
-    fontSize: 14,
-    color: '#333',
-    marginTop: 2,
-    marginBottom: 8,
-  },
-  teamSection: {
-    marginTop: 5,
-    borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
-    paddingTop: 8,
-  },
-  teamLeadText: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#333',
-  },
-  membersText: {
-    fontSize: 13,
-    color: '#666',
-    marginTop: 3,
+    color: '#1E3A8A',
   },
 });
 

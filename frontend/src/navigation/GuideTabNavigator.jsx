@@ -1,22 +1,76 @@
 import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Keyboard, Platform } from 'react-native';
 
 // Import screens - replace with your actual Guide screens
 import GuideHome from '../screens/Guide/GuideHome/GuideHome';
-import Project from '../screens/Guide/Project/GuideProject';
-import Queries from '../screens/Guide/Queries/Queries';
+import Attendance from '../screens/Guide/Attendance/Attendance';
+import Pass from '../screens/Guide/Pass/Pass';
+import Activity from '../screens/Guide/Activity/Activity';
 
-// Import SVG icons
+// Import Material screens from AppLayout
+import MaterialHome from '../screens/Guide/Materials/MaterialHomePage/MaterialHome';
+import Tamil from '../screens/Guide/Materials/Tamil/Tamil';
+import English from '../screens/Guide/Materials/English/English';
+import Mathematics from '../screens/Guide/Materials/Mathematics/Mathematics';
+import Science from '../screens/Guide/Materials/Science/Science';
+import SocialScience from '../screens/Guide/Materials/SocialScience/SocialScience';
+// Note: LevelPromotion excluded as requested
+
+// Import SVG icons - make sure these paths match your actual SVG files
 import Home from '../assets/Navbar/house.svg';
-import ProjectIcon from '../assets/Navbar/file-text.svg';
-import QueriesIcon from '../assets/Navbar/message.svg'; // Assuming you have a message.svg for queries
+import AttendanceIcon from '../assets/Navbar/user-plus.svg';
+import PassIcon from '../assets/Navbar/file-text.svg';
+import ActivityIcon from '../assets/Navbar/bar-chart.svg';
+import MaterialsIcon from '../assets/Navbar/materials.svg';
 
 import HomeClicked from '../assets/Navbar/houseClicked.svg';
-import ProjectClicked from '../assets/Navbar/file-textClicked.svg';
-import QueriesClicked from '../assets/Navbar/messageClicked.svg'; // Assuming you have a messageClicked.svg
+import AttendanceClicked from '../assets/Navbar/user-plusClicked.svg';
+import PassClicked from '../assets/Navbar/file-textClicked.svg';
+import ActivityClicked from '../assets/Navbar/bar-chartClicked.svg';
+import MaterialsClicked from '../assets/Navbar/materialsClicked.svg';
 
 const Tab = createBottomTabNavigator();
+const MaterialStack = createStackNavigator();
+
+// Create a stack navigator for Materials section
+const MaterialStackNavigator = () => {
+  return (
+    <MaterialStack.Navigator>
+      <MaterialStack.Screen
+        name="MaterialHome"
+        component={MaterialHome}
+        options={{ headerShown: false }}
+      />
+      <MaterialStack.Screen 
+        name="Tamil" 
+        component={Tamil} 
+        options={{ headerShown: false }}
+      />
+      <MaterialStack.Screen 
+        name="English" 
+        component={English} 
+        options={{ headerShown: false }}
+      />
+      <MaterialStack.Screen 
+        name="Mathematics" 
+        component={Mathematics} 
+        options={{ headerShown: false }}
+      />
+      <MaterialStack.Screen 
+        name="Science" 
+        component={Science} 
+        options={{ headerShown: false }}
+      />
+      <MaterialStack.Screen 
+        name="SocialScience" 
+        component={SocialScience} 
+        options={{ headerShown: false }}
+      />
+    </MaterialStack.Navigator>
+  );
+};
 
 const GuideTabNavigator = () => {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
@@ -64,29 +118,51 @@ const GuideTabNavigator = () => {
           tabBarLabel: 'Home',
           tabBarIcon: ({ focused }) => {
             const Icon = focused ? HomeClicked : Home;
-            return <Icon width={24} height={24} />;
+            return <Icon width={20} height={20} />;
           },
         }}
       />
       <Tab.Screen
-        name="Queries"
-        component={Queries}
+        name="Attendance"
+        component={Attendance}
         options={{
-          tabBarLabel: 'Queries',
+          tabBarLabel: 'Attendance',
           tabBarIcon: ({ focused }) => {
-            const Icon = focused ? QueriesClicked : QueriesIcon;
-            return <Icon width={24} height={24} />;
+            const Icon = focused ? AttendanceClicked : AttendanceIcon;
+            return <Icon width={20} height={20} />;
           },
         }}
       />
-       <Tab.Screen
-        name="Project"
-        component={Project}
+      <Tab.Screen
+        name="Pass"
+        component={Pass}
         options={{
-          tabBarLabel: 'Project',
+          tabBarLabel: 'Pass',
           tabBarIcon: ({ focused }) => {
-            const Icon = focused ? ProjectClicked : ProjectIcon;
-            return <Icon width={24} height={24} />;
+            const Icon = focused ? PassClicked : PassIcon;
+            return <Icon width={20} height={20} />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Activity"
+        component={Activity}
+        options={{
+          tabBarLabel: 'Activity',
+          tabBarIcon: ({ focused }) => {
+            const Icon = focused ? ActivityClicked : ActivityIcon;
+            return <Icon width={20} height={20} />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="MaterialsStack"
+        component={MaterialStackNavigator}
+        options={{
+          tabBarLabel: 'Materials',
+          tabBarIcon: ({ focused }) => {
+            const Icon = focused ? MaterialsClicked : MaterialsIcon;
+            return <Icon width={20} height={20} />;
           },
         }}
       />
@@ -100,12 +176,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderTopWidth: 1,
     borderTopColor: '#F0F0F0',
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
+    paddingVertical: 8,
   },
   tabLabel: {
-    fontSize: 12,
-    marginTop: 0,
+    fontSize: 10,
+    marginTop: 2,
     marginBottom: 5,
+    fontWeight: '500',
   }
 });
 
