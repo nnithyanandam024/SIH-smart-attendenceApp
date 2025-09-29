@@ -16,19 +16,28 @@ const styles = StyleSheet.create({
         fontSize: 37,
         fontWeight: "900",
         textAlign: "center",
-        marginBottom: 30,
+        marginBottom: 0,
     },
     image: {
         resizeMode: "contain",
         alignSelf: "center",
     },
-    mainText: {
+    mainText1: {
         color: "black",
         letterSpacing: 1,
         fontSize: 25,
         fontWeight: "600",
         textAlign: "center",
-        marginTop: 20,
+        marginTop: 60,
+    },
+
+    mainText: {
+        color: "black",
+        // letterSpacing: 1,
+        fontSize: 20,
+        fontWeight: "600",
+        textAlign: "center",
+        marginBottom: 40,
     },
     text2: {
         color: "black",
@@ -36,7 +45,7 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         letterSpacing: 1,
         textAlign: "center",
-        marginTop: 10,
+        marginTop: 20,
         paddingHorizontal: 20,
         
     },
