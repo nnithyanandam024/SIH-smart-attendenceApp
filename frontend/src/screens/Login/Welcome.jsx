@@ -8,7 +8,7 @@ const Welcome = ({navigation}) => {
       <ScrollView contentContainerStyle={styles.container}>
         <View>
           
-          <Text style={styles.title}>SMART CURRICULAM ATTENDENCE APP</Text>
+          <Text style={styles.title}>EDVANTA</Text>
           <Text style={styles.mainText}>-Team DEVNEST.</Text>
           {/* <Image source={WelcomeImg} style={styles.image} /> */}
           <WelcomeImg style={styles.logimg} />
